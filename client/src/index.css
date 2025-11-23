@@ -1,0 +1,50 @@
+:root {
+  font-family: 'Outfit', 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  /* Light Theme (Default) */
+  --bg-color: #f8f9fa;
+  --card-bg: #ffffff;
+  --text-color: #212529;
+  --text-secondary: #6c757d;
+  --primary-color: #007bff;
+  --primary-hover: #0056b3;
+  --border-color: #dee2e6;
+  --accent-bg: #e9ecef;
+  --shadow-color: rgba(0, 0, 0, 0.05);
+  --success-color: #28a745;
+  --card-border: #007bff;
+}
+
+[data-theme='dark'] {
+  --bg-color: #121212;
+  --card-bg: #1e1e1e;
+  --text-color: #e0e0e0;
+  --text-secondary: #a0a0a0;
+  --primary-color: #4dabf7;
+  --primary-hover: #339af0;
+  --border-color: #333;
+  --accent-bg: #2c2c2c;
+  --shadow-color: rgba(0, 0, 0, 0.3);
+  --success-color: #40c057;
+  --card-border: #4dabf7;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+button {
+  font-family: inherit;
+}
