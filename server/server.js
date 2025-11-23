@@ -20,7 +20,7 @@ const io = new Server(server, {
 });
 
 // Handle React routing, return all requests to React app
-app.get('*', (req, res) => {
+app.get(/.*/, (req, res) => {
     // Check if request is for API/Socket (handled above/internally) or static file
     // If not found in static, serve index.html
     if (!req.url.startsWith('/socket.io/')) {

@@ -1,0 +1,10 @@
+node_modules
+client/node_modules
+server/node_modules
+.git
+.gitignore
+Dockerfile
+deployment.md
+walkthrough.md
+task.md
+implementation_plan.md
