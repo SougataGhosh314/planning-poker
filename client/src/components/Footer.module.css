@@ -1,0 +1,33 @@
+.footer {
+    text-align: center;
+    padding: 1.5rem;
+    background: var(--bg-color);
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    border-top: 1px solid var(--border-color);
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.footer p {
+    margin: 0;
+}
+
+.donateLink {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    cursor: pointer;
+    text-decoration: underline;
+    font-size: 0.9rem;
+    padding: 0;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.donateLink:hover {
+    color: var(--primary-hover);
+}

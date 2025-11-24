@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { LandingPage } from './components/LandingPage';
 import { RoomPage } from './components/RoomPage';
+import { Footer } from './components/Footer';
+import { DonationPopup } from './components/DonationPopup';
 import { socket } from './socket';
 
 function App() {
   const [roomId, setRoomId] = useState(null);
   const [userName, setUserName] = useState('');
   const [role, setRole] = useState('estimator');
+  const [showDonation, setShowDonation] = useState(false);
 
   useEffect(() => {
     // Check if user is already in a room (e.g. from URL params if we implemented that, 
@@ -73,6 +76,9 @@ function App() {
           onLeave={handleLeave}
         />
       )}
+
+      <Footer onDonate={() => setShowDonation(true)} />
+      {showDonation && <DonationPopup onClose={() => setShowDonation(false)} />}
     </div>
   );
 }
