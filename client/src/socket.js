@@ -1,7 +1,6 @@
 import io from 'socket.io-client';
 
-// Connect to the server (assuming it runs on port 3001 locally)
-// In production, this would be the deployed URL
-const URL = 'http://localhost:3001';
+// In development, use localhost:3001. In production (same origin), use undefined to let socket.io auto-detect.
+const URL = import.meta.env.DEV ? 'http://localhost:3001' : undefined;
 
 export const socket = io(URL);
