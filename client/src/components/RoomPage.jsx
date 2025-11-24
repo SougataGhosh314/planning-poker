@@ -18,6 +18,9 @@ export function RoomPage({ roomId, userName, role, onLeave }) {
             }
         });
 
+        // Emit join_room now that listener is ready
+        socket.emit('join_room', { roomId, name: userName, role });
+
         return () => {
             socket.off('room_update');
         };

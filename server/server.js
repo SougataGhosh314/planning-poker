@@ -37,8 +37,16 @@ app.get(/.*/, (req, res) => {
 // }
 const rooms = {};
 
+// Store timeouts for room deletion
+const roomTimeouts = {};
+
 io.on('connection', (socket) => {
     console.log('User connected:', socket.id);
+
+    socket.on('check_room', (roomId, callback) => {
+        // Return true if room exists, false otherwise
+        callback(!!rooms[roomId]);
+    });
 
     socket.on('join_room', ({ roomId, name, role }) => {
         // Create room if it doesn't exist
@@ -50,6 +58,13 @@ io.on('connection', (socket) => {
                 reveal: false
             };
             console.log(`Room ${roomId} created`);
+        } else {
+            // If room exists, check if it was scheduled for deletion and cancel it
+            if (roomTimeouts[roomId]) {
+                clearTimeout(roomTimeouts[roomId]);
+                delete roomTimeouts[roomId];
+                console.log(`Room ${roomId} deletion cancelled`);
+            }
         }
 
         const room = rooms[roomId];
@@ -108,9 +123,17 @@ io.on('connection', (socket) => {
             const index = room.users.findIndex(u => u.id === socket.id);
             if (index !== -1) {
                 room.users.splice(index, 1);
-                // If room is empty, delete it (optional, but good for cleanup)
+
+                // If room is empty, schedule deletion instead of deleting immediately
                 if (room.users.length === 0) {
-                    delete rooms[roomId];
+                    console.log(`Room ${roomId} is empty. Scheduling deletion in 5 minutes.`);
+                    roomTimeouts[roomId] = setTimeout(() => {
+                        if (rooms[roomId] && rooms[roomId].users.length === 0) {
+                            delete rooms[roomId];
+                            delete roomTimeouts[roomId];
+                            console.log(`Room ${roomId} deleted due to inactivity`);
+                        }
+                    }, 5 * 60 * 1000); // 5 minutes
                 } else {
                     io.to(roomId).emit('room_update', room);
                 }

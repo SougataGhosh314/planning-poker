@@ -15,8 +15,20 @@ export function LandingPage({ onJoin }) {
 
         const finalRoomId = isCreating ? Math.random().toString(36).substring(2, 8).toUpperCase() : roomId;
 
-        socket.emit('join_room', { roomId: finalRoomId, name, role });
-        onJoin(finalRoomId, name, role);
+        if (isCreating) {
+            // Just switch view, RoomPage will handle the actual join
+            onJoin(finalRoomId, name, role);
+        } else {
+            // Check if room exists before joining
+            socket.emit('check_room', finalRoomId, (exists) => {
+                if (exists) {
+                    // Just switch view, RoomPage will handle the actual join
+                    onJoin(finalRoomId, name, role);
+                } else {
+                    alert('Room not found! Please check the ID or create a new room.');
+                }
+            });
+        }
     };
 
     return (
